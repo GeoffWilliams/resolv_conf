@@ -128,7 +128,11 @@
 30
 31
 32
-33</pre>
+33
+34
+35
+36
+37</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/params.pp', line 4</span>
@@ -155,6 +159,10 @@ class resolv_conf::params {
       $options            = []
     }
     &quot;FreeBSD&quot;: {
+      $search_keyword     = &quot;search&quot;
+      $options            = []
+    }
+    &quot;Suse&quot;: {
       $search_keyword     = &quot;search&quot;
       $options            = []
     }
