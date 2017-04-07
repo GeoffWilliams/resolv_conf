@@ -10,7 +10,6 @@
 # @param resolv_conf_owner Owner for /etc/resolve.conf
 # @param resolv_conf_group Group for /etc/resolve.conf
 # @param resolv_conf_mode Mode for /etc/resolve.conf
-
 class resolv_conf(
     String        $search_keyword    = $resolv_conf::params::search_keyword,
     String        $search            = $resolv_conf::params::search,

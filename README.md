@@ -41,9 +41,16 @@ class { "resolv_conf":
 Set a search domain and use specific nameservers.
 
 ## Reference
+[generated documentation](https://rawgit.com/GeoffWilliams/resolve_conf/master/doc/index.html).
 
-### Classes
-* `resolv_conf` - Manage the `/etc/resolv.conf` file
+Reference documentation is generated directly from source code using [puppet-strings](https://github.com/puppetlabs/puppet-strings).  You may regenerate the documentation by running:
+
+```shell
+bundle exec puppet strings
+```
+
+
+The documentation is no substitute for reading and understanding the module source code, and all users should ensure they are familiar and comfortable with the operations this module performs before using it.
 
 
 ## Limitations

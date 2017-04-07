@@ -1,6 +1,6 @@
 {
   "name": "geoffwilliams-resolv_conf",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "author": "geoffwilliams",
   "summary": "Manage /etc/resolve.conf on aix, solaris and rhel with puppet",
   "license": "Apache-2.0",
