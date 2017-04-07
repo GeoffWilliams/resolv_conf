@@ -22,6 +22,10 @@ class resolv_conf::params {
       $search_keyword     = "search"
       $options            = []
     }
+    "FreeBSD": {
+      $search_keyword     = "search"
+      $options            = []
+    }
     default: {
       fail("class ${name} does not support ${facts['os']['family']}")
     }
