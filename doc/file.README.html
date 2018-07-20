@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.8
+    &mdash; Documentation by YARD 0.9.15
   
 </title>
 
@@ -65,24 +65,24 @@ src="https://travis-ci.org/GeoffWilliams/resolv_conf.svg?branch=master"></a></p>
 
 <h4 id="label-Table+of+Contents">Table of Contents</h4>
 <ol><li>
-<p><a href="#description">Description</a></p>
+<p><a href="#label-Description">Description</a></p>
 </li><li>
-<p><a href="#usage">Usage - Configuration options and additional
+<p><a href="#label-Usage">Usage - Configuration options and additional
 functionality</a></p>
 </li><li>
-<p><a href="#reference">Reference - An under-the-hood peek at what the module
+<p><a href="#label-Reference">Reference - An under-the-hood peek at what the module
 is doing and how</a></p>
 </li><li>
-<p><a href="#limitations">Limitations - OS compatibility, etc.</a></p>
+<p><a href="#label-Limitations">Limitations - OS compatibility, etc.</a></p>
 </li><li>
-<p><a href="#development">Development - Guide for contributing to the
+<p><a href="#label-Development">Development - Guide for contributing to the
 module</a></p>
 </li></ol>
 
 <h2 id="label-Description">Description</h2>
 
-<p>Manage <code>/etc/resolv.conf</code> on AIX, Solaris, RHEL and FreeBSD with
-Puppet.</p>
+<p>Manage <code>/etc/resolv.conf</code> with Puppet on:  * AIX,  * RHEL/CentOS
+* FreeBSD  * Solaris  * Suse</p>
 
 <h2 id="label-Setup">Setup</h2>
 
@@ -107,7 +107,8 @@ Puppet.</p>
 <pre class="code ruby"><code class="ruby">class { &quot;resolv_conf&quot;:
   search      =&gt; &quot;megacorp.com&quot;,
   nameservers =&gt; [&quot;10.0.0.1&quot;, &quot;10.0.4.4&quot;],
-}</code></pre>
+}
+</code></pre>
 
 <p>Set a search domain and use specific nameservers.</p>
 
