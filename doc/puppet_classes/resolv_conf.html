@@ -172,7 +172,7 @@
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$resolv_conf::params::resolv_conf_path</tt>)</em>
+        <em class="default">(defaults to: <tt>&quot;/etc/resolv.conf&quot;</tt>)</em>
       
       
         &mdash;
@@ -291,7 +291,7 @@ class resolv_conf(
     String        $search            = $resolv_conf::params::search,
     Array[String] $options           = $resolv_conf::params::options,
     Array[String] $nameservers       = $resolv_conf::params::nameservers,
-    String        $resolv_conf_path  = $resolv_conf::params::resolv_conf_path,
+    String        $resolv_conf_path  = &quot;/etc/resolv.conf&quot;,
     String        $resolv_conf_owner = $resolv_conf::params::resolv_conf_owner,
     String        $resolv_conf_group = $resolv_conf::params::resolv_conf_group,
     String        $resolv_conf_mode  = $resolv_conf::params::resolv_conf_mode,

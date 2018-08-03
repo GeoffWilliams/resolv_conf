@@ -15,7 +15,7 @@ class resolv_conf(
     String        $search            = $resolv_conf::params::search,
     Array[String] $options           = $resolv_conf::params::options,
     Array[String] $nameservers       = $resolv_conf::params::nameservers,
-    String        $resolv_conf_path  = $resolv_conf::params::resolv_conf_path,
+    String        $resolv_conf_path  = "/etc/resolv.conf",
     String        $resolv_conf_owner = $resolv_conf::params::resolv_conf_owner,
     String        $resolv_conf_group = $resolv_conf::params::resolv_conf_group,
     String        $resolv_conf_mode  = $resolv_conf::params::resolv_conf_mode,

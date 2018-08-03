@@ -1,12 +1,8 @@
-# The baseline for module testing used by Puppet Labs is that each manifest
-# should have a corresponding test manifest that declares that class or defined
-# type.
+#@PDQTest
 #
-# Tests are then run by using puppet apply --noop (to check for compilation
-# errors and view a log of events) or by fully applying the test in a virtual
-# environment (to compare the resulting system state to the desired state).
-#
-# Learn more about module testing here:
-# https://docs.puppet.com/guides/tests_smoke.html
-#
-include ::resolve_conf
+# We have to write to a "test" resolv.conf as docker controls the real one
+class { "resolv_conf":
+  resolv_conf_path => "/etc/resolv.conf.test",
+  search           => "megalan megacorp.com",
+  nameservers      => ["10.10.10.10", "11.11.11.11"]
+}
