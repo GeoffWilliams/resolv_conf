@@ -30,14 +30,6 @@ describe 'resolv_conf' do
       )}
     end
 
-    context 'correct search line' do
-      let :params do
-        {
-          :search => "megacorp.com",
-        }
-      end
-      it { should contain_file('/etc/resolv.conf').with_content(/search megacorp.com/)}
-    end
   end
 
   #
@@ -68,15 +60,6 @@ describe 'resolv_conf' do
         }
       )}
     end
-    context 'correct search line' do
-      let :params do
-        {
-          :search => "megacorp.com",
-        }
-      end
-      it { should contain_file('/etc/resolv.conf').with_content(/domain megacorp.com/)}
-    end
-
   end
 
   #
@@ -109,14 +92,6 @@ describe 'resolv_conf' do
       )}
     end
 
-    context 'correct search line' do
-      let :params do
-        {
-          :search => "megacorp.com",
-        }
-      end
-      it { should contain_file('/etc/resolv.conf').with_content(/search megacorp.com/)}
-    end
   end
   #
   # FreeBSD
@@ -148,14 +123,6 @@ describe 'resolv_conf' do
       )}
     end
 
-    context 'correct search line' do
-      let :params do
-        {
-          :search => "megacorp.com",
-        }
-      end
-      it { should contain_file('/etc/resolv.conf').with_content(/search megacorp.com/)}
-    end
   end
 
   #
@@ -188,14 +155,6 @@ describe 'resolv_conf' do
       )}
     end
 
-    context 'correct search line' do
-      let :params do
-        {
-          :search => "megacorp.com",
-        }
-      end
-      it { should contain_file('/etc/resolv.conf').with_content(/search megacorp.com/)}
-    end
   end
 
 end

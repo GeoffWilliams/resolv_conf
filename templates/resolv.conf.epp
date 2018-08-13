@@ -1,8 +1,0 @@
-<%- | String $search_keyword, String $search, Array[String] $nameservers, Array[String] $options| -%>
-<%= $search_keyword %> <%= $search %>
-<% $nameservers.each |$nameserver| { -%>
-nameserver <%= $nameserver %>
-<% } -%>
-<% $options.each |$option| { -%>
-options <%= $option %>
-<% } -%>

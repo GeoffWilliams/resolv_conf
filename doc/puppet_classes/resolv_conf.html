@@ -62,11 +62,6 @@
       <div id="content"><h1>Puppet Class: resolv_conf</h1>
 <div class="box_info">
   
-  <dl>
-    <dt>Inherits:</dt>
-    <dd><span class='object_link'><a href="resolv_conf_3A_3Aparams.html" title="puppet_classes::resolv_conf::params (puppet_class)">resolv_conf::params</a></span></dd>
-  </dl>
-  
   
   <dl>
     <dt>Defined in:</dt>
@@ -82,14 +77,62 @@
     
 <p>Resolve_conf</p>
 
-<p>Manage the /etc/resolv.conf file</p>
+<p>Manage the /etc/resolv.conf file.</p>
+
+<p>Rather then using a template, the file is edited in-place. This eliminates
+the need to maintain a template and means that only the items we are
+interested in managing are managed. This makes it possible to use this
+module to say set the search domain without necessarily setting the
+nameservers, which would be impossible if we insisted on managing the whole
+file.</p>
+
+<p>Previous versions of this module would automatically setup google DNS. This
+is no longer the case.</p>
 
   </div>
 </div>
 
 
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>basic usage</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_resolv_conf'>resolv_conf</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Hiera data to set the nameservers</p>
+</div></p>
+      
+      <pre class="example code"><code>resolve_conf::nameservers:
+  - &quot;8.8.8.8&quot;
+  - &quot;8.8.4.4&quot;</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Hiera data to set options</p>
+</div></p>
+      
+      <pre class="example code"><code>resolv_conf::options:
+  - &quot;rotate&quot;
+  - &quot;timeout:2&quot;
+  - &quot;attempts:2&quot;</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Hiera data to set the search domain</p>
+</div></p>
+      
+      <pre class="example code"><code>resolv_conf::search: &quot;megacorp.com&quot;</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -97,10 +140,8 @@
         <span class='name'>search_keyword</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$resolv_conf::params::search_keyword</tt>)</em>
       
       
         &mdash;
@@ -115,10 +156,10 @@
         <span class='name'>search</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$resolv_conf::params::search</tt>)</em>
+        <em class="default">(defaults to: <tt>&quot;&quot;</tt>)</em>
       
       
         &mdash;
@@ -133,10 +174,10 @@
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Array[String]</tt>)</span>
+        <span class='type'>(<tt>Optional[Array[String]]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$resolv_conf::params::options</tt>)</em>
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
       
       
         &mdash;
@@ -151,10 +192,10 @@
         <span class='name'>nameservers</span>
       
       
-        <span class='type'>(<tt>Array[String]</tt>)</span>
+        <span class='type'>(<tt>Optional[Array[String]]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$resolv_conf::params::nameservers</tt>)</em>
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
       
       
         &mdash;
@@ -190,12 +231,12 @@
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$resolv_conf::params::resolv_conf_owner</tt>)</em>
+        <em class="default">(defaults to: <tt>&quot;root&quot;</tt>)</em>
       
       
         &mdash;
         <div class='inline'>
-<p>Owner for /etc/resolve.conf</p>
+<p>Owner for /etc/resolv.conf</p>
 </div>
       
     </li>
@@ -205,15 +246,15 @@
         <span class='name'>resolv_conf_group</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Integer</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$resolv_conf::params::resolv_conf_group</tt>)</em>
+        <em class="default">(defaults to: <tt>0</tt>)</em>
       
       
         &mdash;
         <div class='inline'>
-<p>Group for /etc/resolve.conf</p>
+<p>Group for /etc/resolv.conf</p>
 </div>
       
     </li>
@@ -226,12 +267,30 @@
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$resolv_conf::params::resolv_conf_mode</tt>)</em>
+        <em class="default">(defaults to: <tt>&quot;0644&quot;</tt>)</em>
       
       
         &mdash;
         <div class='inline'>
-<p>Mode for /etc/resolve.conf</p>
+<p>Mode for /etc/resolv.conf</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>header</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&quot;# managed by puppet&quot;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Header to insert into /etc/resolv.conf</p>
 </div>
       
     </li>
@@ -246,33 +305,6 @@
         <pre class="lines">
 
 
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
 40
 41
 42
@@ -281,36 +313,129 @@
 45
 46
 47
-48</pre>
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 13</span>
+        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 40</span>
 
 class resolv_conf(
-    String        $search_keyword    = $resolv_conf::params::search_keyword,
-    String        $search            = $resolv_conf::params::search,
-    Array[String] $options           = $resolv_conf::params::options,
-    Array[String] $nameservers       = $resolv_conf::params::nameservers,
-    String        $resolv_conf_path  = &quot;/etc/resolv.conf&quot;,
-    String        $resolv_conf_owner = $resolv_conf::params::resolv_conf_owner,
-    String        $resolv_conf_group = $resolv_conf::params::resolv_conf_group,
-    String        $resolv_conf_mode  = $resolv_conf::params::resolv_conf_mode,
-) inherits resolv_conf::params{
+    Optional[String]        $search_keyword,
+    Optional[String]        $search             = &quot;&quot;,
+    Optional[Array[String]] $options            = [],
+    Optional[Array[String]] $nameservers        = [],
+    String                  $resolv_conf_path   = &quot;/etc/resolv.conf&quot;,
+    String                  $resolv_conf_owner  = &quot;root&quot;,
+    Integer                 $resolv_conf_group  = 0,
+    String                  $resolv_conf_mode   = &quot;0644&quot;,
+    String                  $header             = &quot;# managed by puppet&quot;,
+) {
 
-
-  $template_vars = {
-    &quot;search_keyword&quot; =&gt; $search_keyword,
-    &quot;search&quot;         =&gt; $search,
-    &quot;nameservers&quot;    =&gt; $nameservers,
-    &quot;options&quot;        =&gt; $options,
-  }
+  # work out what lines should be in the file
+  $search_line = &quot;${search_keyword} ${search}&quot;
+  $nameservers_lines = $nameservers.map |$l| {
+    &quot;nameserver ${l}&quot;
+  }.join(&quot;\n&quot;)
+  $options_lines = $options.map |$l| {
+    &quot;option ${l}&quot;
+  }.join(&quot;\n&quot;)
 
   file { $resolv_conf_path:
-    ensure  =&gt; file,
-    owner   =&gt; $resolv_conf_owner,
-    group   =&gt; $resolv_conf_group,
-    mode    =&gt; $resolv_conf_mode,
-    content =&gt; epp(&quot;${module_name}/resolv.conf.epp&quot;, $template_vars),
+    ensure =&gt; file,
+    owner  =&gt; $resolv_conf_owner,
+    group  =&gt; $resolv_conf_group,
+    mode   =&gt; $resolv_conf_mode,
+  }
+
+  fm_prepend { $resolv_conf_path:
+    ensure =&gt; present,
+    data   =&gt; $header,
+  }
+
+  fm_replace { &quot;${resolv_conf_path} search line&quot;:
+    ensure            =&gt; present,
+    path              =&gt; $resolv_conf_path,
+    data              =&gt; $search_line,
+    match             =&gt; &quot;^${search_keyword}&quot;,
+    insert_if_missing =&gt; true,
+    insert_at         =&gt; &quot;top&quot;,
+  }
+
+  fm_replace { &quot;${resolv_conf_path} nameservers lines&quot;:
+    ensure            =&gt; present,
+    path              =&gt; $resolv_conf_path,
+    data              =&gt; $nameservers_lines,
+    match             =&gt; &quot;^nameserver &quot;,
+    insert_if_missing =&gt; true,
+    insert_at         =&gt; &quot;bottom&quot;,
+  }
+
+  fm_replace { &quot;${resolv_conf_path} options lines&quot;:
+    ensure            =&gt; present,
+    path              =&gt; $resolv_conf_path,
+    data              =&gt; $options_lines,
+    match             =&gt; &quot;^option &quot;,
+    insert_if_missing =&gt; true,
+    insert_at         =&gt; &quot;bottom&quot;,
   }
 
   # On Solaris must also bounce the dns client service
