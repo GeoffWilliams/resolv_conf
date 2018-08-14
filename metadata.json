@@ -1,6 +1,6 @@
 {
   "name": "geoffwilliams-resolv_conf",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "geoffwilliams",
   "summary": "Manage /etc/resolve.conf on aix, solaris and rhel with puppet",
   "license": "Apache-2.0",
@@ -9,7 +9,7 @@
   "issues_url": "https://github.com/GeoffWilliams/resolv_conf/issues",
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"},
-    {"name":"geoffwilliams-filemagic","version_requirement":"0.6.1"}
+    {"name":"geoffwilliams-filemagic","version_requirement":"0.6.0"}
   ],
   "data_provider": null
 }
