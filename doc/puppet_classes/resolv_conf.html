@@ -159,7 +159,7 @@ is no longer the case.</p>
         <span class='type'>(<tt>Optional[String]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&quot;&quot;</tt>)</em>
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
         &mdash;
@@ -373,14 +373,20 @@ is no longer the case.</p>
 105
 106
 107
-108</pre>
+108
+109
+110
+111
+112
+113
+114</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/init.pp', line 40</span>
 
 class resolv_conf(
     Optional[String]        $search_keyword,
-    Optional[String]        $search             = &quot;&quot;,
+    Optional[String]        $search             = undef,
     Optional[Array[String]] $options            = [],
     Optional[Array[String]] $nameservers        = [],
     String                  $resolv_conf_path   = &quot;/etc/resolv.conf&quot;,
@@ -411,31 +417,37 @@ class resolv_conf(
     data   =&gt; $header,
   }
 
-  fm_replace { &quot;${resolv_conf_path} search line&quot;:
-    ensure            =&gt; present,
-    path              =&gt; $resolv_conf_path,
-    data              =&gt; $search_line,
-    match             =&gt; &quot;^${search_keyword}&quot;,
-    insert_if_missing =&gt; true,
-    insert_at         =&gt; &quot;top&quot;,
+  if $search {
+    fm_replace { &quot;${resolv_conf_path} search line&quot;:
+      ensure            =&gt; present,
+      path              =&gt; $resolv_conf_path,
+      data              =&gt; $search_line,
+      match             =&gt; &quot;^${search_keyword}&quot;,
+      insert_if_missing =&gt; true,
+      insert_at         =&gt; &quot;top&quot;,
+    }
   }
 
-  fm_replace { &quot;${resolv_conf_path} nameservers lines&quot;:
-    ensure            =&gt; present,
-    path              =&gt; $resolv_conf_path,
-    data              =&gt; $nameservers_lines,
-    match             =&gt; &quot;^nameserver &quot;,
-    insert_if_missing =&gt; true,
-    insert_at         =&gt; &quot;bottom&quot;,
+  if ! $nameservers.empty {
+    fm_replace { &quot;${resolv_conf_path} nameservers lines&quot;:
+      ensure            =&gt; present,
+      path              =&gt; $resolv_conf_path,
+      data              =&gt; $nameservers_lines,
+      match             =&gt; &quot;^nameserver &quot;,
+      insert_if_missing =&gt; true,
+      insert_at         =&gt; &quot;bottom&quot;,
+    }
   }
 
-  fm_replace { &quot;${resolv_conf_path} options lines&quot;:
-    ensure            =&gt; present,
-    path              =&gt; $resolv_conf_path,
-    data              =&gt; $options_lines,
-    match             =&gt; &quot;^option &quot;,
-    insert_if_missing =&gt; true,
-    insert_at         =&gt; &quot;bottom&quot;,
+  if ! $options.empty {
+    fm_replace { &quot;${resolv_conf_path} options lines&quot;:
+      ensure            =&gt; present,
+      path              =&gt; $resolv_conf_path,
+      data              =&gt; $options_lines,
+      match             =&gt; &quot;^option &quot;,
+      insert_if_missing =&gt; true,
+      insert_at         =&gt; &quot;bottom&quot;,
+    }
   }
 
   # On Solaris must also bounce the dns client service

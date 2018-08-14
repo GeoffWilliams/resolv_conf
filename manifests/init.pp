@@ -39,7 +39,7 @@
 # @param header Header to insert into /etc/resolv.conf
 class resolv_conf(
     Optional[String]        $search_keyword,
-    Optional[String]        $search             = "",
+    Optional[String]        $search             = undef,
     Optional[Array[String]] $options            = [],
     Optional[Array[String]] $nameservers        = [],
     String                  $resolv_conf_path   = "/etc/resolv.conf",
@@ -70,31 +70,37 @@ class resolv_conf(
     data   => $header,
   }
 
-  fm_replace { "${resolv_conf_path} search line":
-    ensure            => present,
-    path              => $resolv_conf_path,
-    data              => $search_line,
-    match             => "^${search_keyword}",
-    insert_if_missing => true,
-    insert_at         => "top",
+  if $search {
+    fm_replace { "${resolv_conf_path} search line":
+      ensure            => present,
+      path              => $resolv_conf_path,
+      data              => $search_line,
+      match             => "^${search_keyword}",
+      insert_if_missing => true,
+      insert_at         => "top",
+    }
   }
 
-  fm_replace { "${resolv_conf_path} nameservers lines":
-    ensure            => present,
-    path              => $resolv_conf_path,
-    data              => $nameservers_lines,
-    match             => "^nameserver ",
-    insert_if_missing => true,
-    insert_at         => "bottom",
+  if ! $nameservers.empty {
+    fm_replace { "${resolv_conf_path} nameservers lines":
+      ensure            => present,
+      path              => $resolv_conf_path,
+      data              => $nameservers_lines,
+      match             => "^nameserver ",
+      insert_if_missing => true,
+      insert_at         => "bottom",
+    }
   }
 
-  fm_replace { "${resolv_conf_path} options lines":
-    ensure            => present,
-    path              => $resolv_conf_path,
-    data              => $options_lines,
-    match             => "^option ",
-    insert_if_missing => true,
-    insert_at         => "bottom",
+  if ! $options.empty {
+    fm_replace { "${resolv_conf_path} options lines":
+      ensure            => present,
+      path              => $resolv_conf_path,
+      data              => $options_lines,
+      match             => "^option ",
+      insert_if_missing => true,
+      insert_at         => "bottom",
+    }
   }
 
   # On Solaris must also bounce the dns client service
