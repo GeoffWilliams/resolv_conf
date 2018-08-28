@@ -5,16 +5,11 @@
 
 **Classes**
 
-* [`resolv_conf`](#resolv_conf): Resolve_conf  Manage the /etc/resolv.conf file.  Rather then using a template, the file is edited in-place. This eliminates the need to maint
-* [`resolv_conf::params`](#resolv_confparams): Resolve_conf::Param  Params pattern
+* [`resolv_conf`](#resolv_conf): Manage the /etc/resolv.conf file.
 
 ## Classes
 
 ### resolv_conf
-
-Resolve_conf
-
-Manage the /etc/resolv.conf file.
 
 Rather then using a template, the file is edited in-place. This eliminates the need
 to maintain a template and means that only the items we are interested in managing
@@ -129,10 +124,4 @@ Data type: `String`
 Header to insert into /etc/resolv.conf
 
 Default value: "# managed by puppet"
-
-### resolv_conf::params
-
-Resolve_conf::Param
-
-Params pattern
 

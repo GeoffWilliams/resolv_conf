@@ -1,6 +1,4 @@
-# Resolve_conf
-#
-# Manage the /etc/resolv.conf file.
+# @summary Manage the /etc/resolv.conf file.
 #
 # Rather then using a template, the file is edited in-place. This eliminates the need
 # to maintain a template and means that only the items we are interested in managing
